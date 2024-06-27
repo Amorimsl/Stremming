@@ -11,6 +11,7 @@ function App() {
   const [popularSeries, setPopularSeries] = useState([]);
   const [movies, setMovies] = useState([]);
   const [halloWeenCollections, setHalloweenCollections] = useState([]);
+  const [genre, setGenre] = useState([]);
 
   useEffect(() => {
     const fetchPopularSeries = async () => {
@@ -41,6 +42,7 @@ function App() {
           }
         );
         setMovies(response.data.results);
+        console.log(movies);
       } catch (error) {
         console.error('Erro ao buscar os filmes:', error);
       }
@@ -61,9 +63,27 @@ function App() {
         console.error('Erro ao buscar as coleções de Halloween:', error);
       }
     };
+    const genreMovies = async () => {
+      try {
+        const response = await axios.get(
+          'https://api.themoviedb.org/3/genre/movie/list?language=en',
+          {
+            params: {
+              api_key: '276c8dd1a63ee21cfe68c83fd88f5107',
+              language: 'pt-BR',
+            },
+          }
+        );
+        setGenre(response.data.genres);
+        console.log(genre);
+      } catch (error) {
+        console.error('Erro ao buscar as coleções de Halloween:', error);
+      }
+    };
     fetchHalloweenCollections();
     fetchMovies();
     fetchPopularSeries();
+    genreMovies();
   }, []);
   return (
     <>
@@ -84,7 +104,10 @@ function App() {
             path="/series"
             element={<Series popularSeries={popularSeries} />}
           />
-          <Route path="/filmes" element={<Filmes movies={movies} />} />
+          <Route
+            path="/filmes"
+            element={<Filmes movies={movies} genre={genre} />}
+          />
           <Route path="/actors" element={<Actors />} />
         </Routes>
       </BrowserRouter>

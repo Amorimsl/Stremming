@@ -1,7 +1,9 @@
-const Info = () => {
-  return (
-    <div className="text-white font-normal text-base">2021 - 1 h 41 min</div>
-  );
+interface PropsRelease {
+  releaseDate: string;
+}
+
+const Info: React.FC<PropsRelease> = ({ releaseDate }) => {
+  return <div className="text-white font-normal text-base">{releaseDate}</div>;
 };
 
 export default Info;
