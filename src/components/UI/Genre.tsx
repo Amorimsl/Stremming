@@ -1,10 +1,5 @@
-
 const Genre = () => {
-  return (
-    <div className="text-white font-normal text-xs">
-      Drama
-    </div>
-  )
-}
+  return <div className="text-white font-normal text-xs">DRAMA</div>;
+};
 
-export default Genre
+export default Genre;
