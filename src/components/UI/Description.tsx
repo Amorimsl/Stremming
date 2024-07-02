@@ -1,11 +1,11 @@
-interface PropsOverviews {
-  overviews: string;
+interface PropDescription {
+  description: string;
 }
 
-const Description: React.FC<PropsOverviews> = ({ overviews }) => {
+const Description: React.FC<PropDescription> = ({ description }) => {
   return (
     <div className="text-white font-normal text-xl md:max-w-719">
-      {overviews}
+      {description}
     </div>
   );
 };

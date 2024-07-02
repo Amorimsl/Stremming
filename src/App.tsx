@@ -1,114 +1,100 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Series from './pages/Series';
-import Filmes from './pages/Filmes';
-import Actors from './pages/Actors';
+import Section from './pages/Section';
 import Login from './pages/Login';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import VerifySession from './pages/VerifySession';
+import Loading from './components/UI/Loading';
+import Favorites from './pages/Favorites';
+import InfoTemporada from './components/UI/InfoTemporada';
 
 function App() {
-  const [popularSeries, setPopularSeries] = useState([]);
-  const [movies, setMovies] = useState([]);
-  const [halloWeenCollections, setHalloweenCollections] = useState([]);
-  const [genre, setGenre] = useState([]);
-
-  useEffect(() => {
-    const fetchPopularSeries = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.themoviedb.org/3/tv/popular',
-          {
-            params: {
-              api_key: '276c8dd1a63ee21cfe68c83fd88f5107',
-              language: 'pt-BR',
-            },
-          }
-        );
-        setPopularSeries(response.data.results);
-      } catch (error) {
-        console.error('Erro ao buscar as séries populares:', error);
-      }
-    };
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.themoviedb.org/3/movie/popular',
-          {
-            params: {
-              api_key: '276c8dd1a63ee21cfe68c83fd88f5107',
-              language: 'pt-BR',
-            },
-          }
-        );
-        setMovies(response.data.results);
-        console.log(movies);
-      } catch (error) {
-        console.error('Erro ao buscar os filmes:', error);
-      }
-    };
-    const fetchHalloweenCollections = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.themoviedb.org/3/list/1',
-          {
-            params: {
-              api_key: '276c8dd1a63ee21cfe68c83fd88f5107',
-              language: 'pt-BR',
-            },
-          }
-        );
-        setHalloweenCollections(response.data.items);
-      } catch (error) {
-        console.error('Erro ao buscar as coleções de Halloween:', error);
-      }
-    };
-    const genreMovies = async () => {
-      try {
-        const response = await axios.get(
-          'https://api.themoviedb.org/3/genre/movie/list?language=en',
-          {
-            params: {
-              api_key: '276c8dd1a63ee21cfe68c83fd88f5107',
-              language: 'pt-BR',
-            },
-          }
-        );
-        setGenre(response.data.genres);
-        console.log(genre);
-      } catch (error) {
-        console.error('Erro ao buscar as coleções de Halloween:', error);
-      }
-    };
-    fetchHalloweenCollections();
-    fetchMovies();
-    fetchPopularSeries();
-    genreMovies();
-  }, []);
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/verifySession" element={<Loading />} />
           <Route
             path="/home"
             element={
-              <Home
-                popularSeries={popularSeries}
-                movies={movies}
-                halloWeenCollections={halloWeenCollections}
+              <VerifySession
+                component={Section}
+                componentProps={{ name: 'Home' }}
               />
             }
           />
           <Route
             path="/series"
-            element={<Series popularSeries={popularSeries} />}
+            element={
+              <VerifySession
+                component={Section}
+                componentProps={{ name: 'Séries' }}
+              />
+            }
           />
           <Route
-            path="/filmes"
-            element={<Filmes movies={movies} genre={genre} />}
+            path="/actors"
+            element={
+              <VerifySession
+                component={Section}
+                componentProps={{ name: 'Actors' }}
+              />
+            }
           />
-          <Route path="/actors" element={<Actors />} />
+
+          <Route
+            path="/series"
+            element={
+              <VerifySession
+                component={Section}
+                componentProps={{ name: 'Séries' }}
+              />
+            }
+          />
+          <Route
+            path="/Movies"
+            element={
+              <VerifySession
+                component={Section}
+                componentProps={{ name: 'Filmes' }}
+              />
+            }
+          />
+          <Route
+            path="/infoSeries"
+            element={
+              <VerifySession
+                component={Section}
+                componentProps={{ name: 'InfoSeries' }}
+              />
+            }
+          />
+          <Route
+            path="/infoMovies"
+            element={
+              <VerifySession
+                component={Section}
+                componentProps={{ name: 'infoMovies' }}
+              />
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <VerifySession
+                component={Favorites}
+                componentProps={{ section: <Favorites /> }}
+              />
+            }
+          />
+          <Route
+            path="/infoSeason/:id"
+            element={
+              <VerifySession
+                component={InfoTemporada}
+                componentProps={{ section: <InfoTemporada /> }}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>

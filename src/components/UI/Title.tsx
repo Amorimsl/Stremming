@@ -1,9 +1,15 @@
-interface PropsMovie {
-  movies: string;
+import React from 'react';
+
+interface TitleProps {
+  title: string;
 }
 
-const Title: React.FC<PropsMovie> = ({ movies }) => {
-  return <h1 className="text-white text-4xl font-bold">{movies}</h1>;
-};
+const Title: React.FC<TitleProps>= ({ title }) => {
+  return (
+    <h1 className="text-white text-4xl font-bold">
+      {title}
+    </h1>
+  )
+}
 
-export default Title;
+export default Title
